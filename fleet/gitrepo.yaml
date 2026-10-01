@@ -1,0 +1,18 @@
+# Apply on the Rancher (local) cluster, or create the same in Rancher:
+# Continuous Delivery -> Git Repos -> fleet-default
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: retail-shed-stores
+  namespace: fleet-default
+spec:
+  repo: https://github.com/smclab0/retail-shed-fleet
+  branch: main
+  paths:
+    - fleet/store-pos
+  pollingInterval: 30s
+  targets:
+    - name: all-stores
+      clusterSelector:
+        matchExpressions:
+          - {key: retail.lab/store, operator: Exists}

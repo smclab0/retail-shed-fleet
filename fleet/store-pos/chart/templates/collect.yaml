@@ -1,0 +1,26 @@
+{{- if include "store-pos.collect" . }}
+{{ include "store-pos.deployment" (list . "collect") }}
+---
+# K3s Traefik: serve the board under /collect/ and strip the prefix
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: collect-strip
+spec:
+  stripPrefix:
+    prefixes: [/collect]
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: collect
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: {{ .Release.Namespace }}-collect-strip@kubernetescrd
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /collect
+            pathType: Prefix
+            backend: {service: {name: collect, port: {name: http}}}
+{{- end }}

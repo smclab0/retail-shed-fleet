@@ -1,0 +1,32 @@
+# Fleet bundle: the store-pos till on every store cluster.
+#
+# Store identity comes from the cluster's labels (set by HQ in setup-stores.sh),
+# so one bundle serves the whole estate. Flagship stores also get the click &
+# collect board. Regions get their own price weighting and banner through
+# targetCustomizations (first match wins).
+defaultNamespace: store-pos
+helm:
+  releaseName: store-pos
+  chart: ./chart
+  values:
+    store:
+      id: ${ get .ClusterLabels "retail.lab/store" }
+      region: ${ get .ClusterLabels "retail.lab/region" }
+      tier: ${ get .ClusterLabels "retail.lab/tier" }
+    collect:
+      enabled: ${ eq (get .ClusterLabels "retail.lab/tier") "flagship" }
+
+targetCustomizations:
+  - name: london
+    clusterSelector:
+      matchLabels: {retail.lab/region: london}
+    helm:
+      values:
+        prices: {multiplier: 1.12}
+        banner: "London pricing applies"
+  - name: edinburgh
+    clusterSelector:
+      matchLabels: {retail.lab/region: edinburgh}
+    helm:
+      values:
+        banner: "Scottish produce week - local cheese in store"

@@ -1,0 +1,28 @@
+image:
+  repository: ghcr.io/smclab0/store-pos
+  tag: "1.0.0"
+
+# Filled per store by Fleet from the cluster's retail.lab/* labels (fleet.yaml)
+store:
+  id: unknown
+  region: unknown
+  tier: standard
+
+# Click & collect board; fleet.yaml turns it on for flagship stores
+collect:
+  enabled: "false"
+
+# The till probes HQ to show the WAN state; it keeps trading either way
+hqUrl: https://rancher.retail-shed.local/ping
+currency: "£"
+banner: ""
+
+prices:
+  multiplier: 1.0
+  items:
+    - {sku: TEA-001, name: "Breakfast tea (80)", price: 3.50, stock: 40}
+    - {sku: MLK-002, name: "Semi-skimmed milk 2L", price: 1.65, stock: 60}
+    - {sku: BRD-003, name: "Sourdough loaf", price: 2.95, stock: 25}
+    - {sku: JAM-004, name: "Strawberry jam", price: 2.20, stock: 30}
+    - {sku: CHS-005, name: "Mature cheddar 400g", price: 4.10, stock: 20}
+    - {sku: APL-006, name: "Braeburn apples (6)", price: 2.30, stock: 35}
