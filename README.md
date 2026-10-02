@@ -1,7 +1,7 @@
 # retail-shed-fleet
 
 GitOps for the stores of [retail-shed](https://github.com/smclab0/hypothetical-retail-edge),
-a SUSE Edge retail lab: Rancher Prime at HQ, K3s store clusters on SL Micro.
+a SUSE Edge retail lab: Rancher (rancher-stable chart) at HQ, K3s store clusters on SL Micro.
 Fleet deploys **store-pos**, a small till app, to every store from this repo.
 
 ```
